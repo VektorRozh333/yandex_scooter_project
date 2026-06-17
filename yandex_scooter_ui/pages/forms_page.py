@@ -6,13 +6,13 @@ from selenium.webdriver.common.by import By
 
 class FormsPage(BasePage):
     TOP_BUTTON = (By.XPATH, ".//button[@class='Button_Button__ra12g']")
-    BOTTOM_BUTTON = (By.XPATH, ".//button[@class='Button_Button__ra12g Button_UltraBig__UU3Lp']")
+    BOTTOM_BUTTON = (By.XPATH, ".//div[@class='Home_FinishButton__1_cWm']button[@class='Button_Button__ra12g Button_UltraBig__UU3Lp']")
     FURTHER =  (By.XPATH, ".//button[@class='Button_Button__ra12g Button_Middle__1CSJM'][text()='Далее']")
     FIRST_NAME = (By.XPATH, ".//input[@placeholder='* Имя']")
     LAST_NAME = (By.XPATH, ".//input[@placeholder='* Фамилия']")
     ADRESS = (By.XPATH, ".//input[@placeholder='* Адрес: куда привезти заказ']")
     METRO_INPUT = (By.XPATH, ".//input[@placeholder='* Станция метро']")
-    METRO_CHOICE = (By.XPATH, ".//input[@value='Красногвардейская']")
+    METRO_CHOICE = (By.XPATH, ".//div[@class='select-search__select'][@value='Красногвардейская']")
     USER_NUMBER = (By.XPATH, ".//input[@placeholder='* Телефон: на него позвонит курьер']")
     DELIVERY_TIME = (By.XPATH, ".//input[@placeholder='* Когда привезти самокат']")
     RENTAL_PERIOD_INPUT = (By.XPATH, ".//div[@class='Dropdown-placeholder is-selected']")
@@ -22,15 +22,15 @@ class FormsPage(BasePage):
     MAKE_ORDER = (By.XPATH, ".//button[@class='Button_Button__ra12g Button_Middle__1CSJM'][text()='Заказать']")
     CONFIRM_ORDER = (By.XPATH, ".//button[@class='Button_Button__ra12g Button_Middle__1CSJM'][text()='Да']")
     STATUS_ORDER = (By.XPATH, ".//button[@class='Button_Button__ra12g Button_Middle__1CSJM'][text()='Посмотреть статус']")
-
+    #//div[@class='...']//input[@value='...'],//div[@class='select-search__select']//input[@value='Красногвардейская']
 
 
     @allure.step("Проверка перехода через верхнюю кнопку заказать")
-    def go_to_main_page(self):
+    def go_to_order_forms_through_top_button(self):
         self.click(FormsPage.TOP_BUTTON)
 
     @allure.step("Проверка перехода через нижнюю кнопку заказать")
-    def go_to_main_page(self):
+    def go_to_order_forms_through_bottom_button(self):
         self.scroll_to_element(FormsPage.BOTTOM_BUTTON)
         self.click(FormsPage.BOTTOM_BUTTON)
 
@@ -48,8 +48,11 @@ class FormsPage(BasePage):
 
     @allure.step("Выбор станции метро {metro}")
     def choice_metro_station(self, metro):
-        self.fill_up_text_field(FormsPage.METRO_INPUT, metro)
+        
+        
+        self.wait_visibility_of_element_located(FormsPage.METRO_CHOICE)
         self.scroll_to_element(FormsPage.METRO_CHOICE)
+        self.wait_visibility_of_element_located(FormsPage.METRO_CHOICE)
         self.click(FormsPage.METRO_CHOICE)
         
     @allure.step("Заполнение формы телефона {user_number}")
