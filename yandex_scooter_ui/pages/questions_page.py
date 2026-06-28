@@ -1,10 +1,10 @@
 import allure
-
 from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
 
 
 class QuestionsPage(BasePage):
+    
     FIRST_QUESTION = (By.XPATH, ".//div[@id='accordion__heading-0']")
     SECOND_QUESTION = (By.XPATH, ".//div[@id='accordion__heading-1']")
     THIRD_QUESTION = (By.XPATH, ".//div[@id='accordion__heading-2']")

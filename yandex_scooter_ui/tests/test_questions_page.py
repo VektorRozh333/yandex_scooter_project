@@ -1,10 +1,10 @@
 import allure
 import data
-
 from pages.questions_page import QuestionsPage
 
 
 class TestQuestionsPage:
+    
     @allure.title("Проверка выпадающего списка в разделе вопроссы о важном")
     def test_questions(self, driver):
         questions_page = QuestionsPage(driver)

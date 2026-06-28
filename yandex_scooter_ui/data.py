@@ -1,5 +1,6 @@
 BASE_URL = 'https://qa-scooter.education-services.ru/'
 
+
 DATA_FORM = [
 
     [
@@ -25,4 +26,5 @@ DATA_FORM = [
         'grey',
         'Неплохо, хороший хабар!'
     ]
+
 ]

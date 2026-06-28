@@ -1,14 +1,14 @@
 import allure
-
+import time
 from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
 
 
 class LogoPage(BasePage):
-    YANDEX_LOGO = (By.XPATH, ".//a[@class='Header_LogoYandex__3TSOI']")
-    SCOOTER_LOGO = (By.XPATH, ".//a[@class='Header_LogoScooter__3lsAR']")
-    TEST_TRANSITION_TOP = (By.XPATH, ".//button[@class='Button_Button__ra12g']")
-    TEST_TRANSITION_BOTTOM = (By.XPATH, ".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']")
+
+    YANDEX_LOGO = (By.CLASS_NAME, 'Header_LogoYandex__3TSOI')
+    SCOOTER_LOGO = (By.CLASS_NAME, 'Header_LogoScooter__3lsAR')
+    ORDER_BUTTON = (By.XPATH, ".//button[text()='Заказать']")
     COOKIE_BUTTON = (By.ID, 'rcc-confirm-button')
 
 
@@ -17,16 +17,13 @@ class LogoPage(BasePage):
         self.click(self.COOKIE_BUTTON)
 
 
-    @allure.step("Проверка перехода на главную страницу Самоката через верхнюю кнопку")
-    def go_to_main_page_top_button(self):
-        self.click(LogoPage.TEST_TRANSITION_TOP)
-        self.click(LogoPage.SCOOTER_LOGO)
+    @allure.step('Нажатие верхней кнопки Заказать')
+    def click_on_order_logo(self):
+        self.click(self.ORDER_BUTTON)
 
 
-    @allure.step("Проверка перехода на главную страницу Самоката через нижнюю кнопку")
-    def go_to_main_page_bottom_button(self):
-        self.scroll_to_element(LogoPage.TEST_TRANSITION_BOTTOM)
-        self.click(LogoPage.TEST_TRANSITION_BOTTOM)
+    @allure.step("Проверка перехода на главную страницу Самоката")
+    def click_on_scooter_logo(self):
         self.click(LogoPage.SCOOTER_LOGO)
 
 

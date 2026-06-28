@@ -1,19 +1,16 @@
 import allure
 import pytest
 import data
-
 from pages.forms_page import FormsPage
 
 
 class TestFormsPage:
 
-    @allure.title("Заполнение формы заказа")
+    @allure.title('Создание формы заказа')
     @pytest.mark.parametrize(
         'first_name, last_name, address, metro, user_number, delivery_time, rental_period, color, comments',
         data.DATA_FORM
     )
-
-    @allure.title('Позитивный тест создания заказа')
     def test_create_order(
             self,
             driver,
@@ -46,7 +43,7 @@ class TestFormsPage:
                 metro,
                 user_number
             )
-        time.sleep(3)
+
         with allure.step('Нажатие кнопки далее'):
             forms_page.go_to_further_button()
 

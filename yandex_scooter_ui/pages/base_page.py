@@ -1,11 +1,11 @@
 import allure
-
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from abc import ABC
 
 
 class BasePage(ABC):
+    
     def __init__(self, driver):
         self.driver = driver
 
