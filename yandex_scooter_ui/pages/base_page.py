@@ -44,9 +44,9 @@ class BasePage(ABC):
         self.wait_clickable(locator).click()
     
 
-    def fill_up_text_field(self, locator, text):
-        self.wait_presence_of_element_located(locator)
-        self.driver.find_element(*locator).send_keys(text)
+    @allure.step('Ввод текста')
+    def send_keys(self, locator, text):
+        self.wait_element(locator).send_keys(text)
 
 
     @allure.step('Скролл до элемента')

@@ -1,11 +1,19 @@
 import chromedriver_autoinstaller
+import allure
 import pytest
+
 from selenium import webdriver
-# не забыть указать путь к конфтесту
+
 
 @pytest.fixture(scope='function')
 def driver():
+    
     chromedriver_autoinstaller.install()
-    driver = webdriver.Chrome()
+    with allure.step('Запуск браузера'):
+        driver = webdriver.Chrome()
+        driver.maximize_window()
     yield driver
-    driver.quit()
+
+    with allure.step('Закрытие браузера'):
+        driver.quit()
+    

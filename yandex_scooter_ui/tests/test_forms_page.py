@@ -1,22 +1,48 @@
 import allure
+import pytest
 import data
+import time
 
 from pages.forms_page import FormsPage
 
 
 class TestFormsPage:
 
-
     @allure.title("Заполнение формы заказа")
-    def test_forms_fill_up_order_forms(self, driver):
-        forms_page = FormsPage(driver)
-        forms_page.open(data.FORMS_URL)
-        forms_page.fill_up_first_name_field(data.DATA_FORM.get('first_name'))
-        forms_page.fill_up_last_name_field(data.DATA_FORM.get('last_name'))
-        forms_page.fill_up_user_adress_field(data.DATA_FORM.get('adress'))
-        forms_page.choice_metro_station(data.DATA_FORM.get('metro'))
-        forms_page.fill_up_user_number_field(data.DATA_FORM.get('user_number'))
-        forms_page.go_to_next_section()
-        forms_page.fill_up_delivery_time_field(data.DATA_FORM.get('delivery_time'))
+    @pytest.mark.parametrize(
+        'first_name, last_name, address, metro, user_number',
+        data.DATA_FORM
+    )
 
-        forms_page.fill_up_comments_field(data.DATA_FORM.get('comments'))
+    @allure.title('Позитивный тест создания заказа')
+    def test_create_order(
+            self,
+            driver,
+            first_name,
+            last_name,
+            address,
+            metro,
+            user_number
+    ):
+        forms_page = FormsPage(driver)
+
+        with allure.step('Открытие главной страницы'):
+            forms_page.open(data.BASE_URL)
+
+        with allure.step('Принятие cookie'):
+            forms_page.accept_cookie()
+        time.sleep(3)
+        with allure.step('Нажатие кнопки заказать'):
+            forms_page.go_to_order_button()
+        time.sleep(3)
+        with allure.step('Заполнение первой формы'):
+            forms_page.fill_first_form(
+                first_name,
+                last_name,
+                address,
+                metro,
+                user_number
+            )
+        time.sleep(3)
+        with allure.step('Нажатие кнопки далее'):
+            forms_page.go_to_further_button()
