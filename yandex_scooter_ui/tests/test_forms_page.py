@@ -1,7 +1,6 @@
 import allure
 import pytest
 import data
-import time
 
 from pages.forms_page import FormsPage
 
@@ -10,7 +9,7 @@ class TestFormsPage:
 
     @allure.title("Заполнение формы заказа")
     @pytest.mark.parametrize(
-        'first_name, last_name, address, metro, user_number',
+        'first_name, last_name, address, metro, user_number, delivery_time, rental_period, color, comments',
         data.DATA_FORM
     )
 
@@ -22,7 +21,11 @@ class TestFormsPage:
             last_name,
             address,
             metro,
-            user_number
+            user_number,
+            delivery_time,
+            rental_period,
+            color,
+            comments
     ):
         forms_page = FormsPage(driver)
 
@@ -31,10 +34,10 @@ class TestFormsPage:
 
         with allure.step('Принятие cookie'):
             forms_page.accept_cookie()
-        time.sleep(3)
+
         with allure.step('Нажатие кнопки заказать'):
             forms_page.go_to_order_button()
-        time.sleep(3)
+
         with allure.step('Заполнение первой формы'):
             forms_page.fill_first_form(
                 first_name,
@@ -46,3 +49,17 @@ class TestFormsPage:
         time.sleep(3)
         with allure.step('Нажатие кнопки далее'):
             forms_page.go_to_further_button()
+
+        with allure.step('Заполнение второй формы'):
+            forms_page.fill_second_form(
+                delivery_time,
+                rental_period,
+                color,
+                comments
+            )
+
+        with allure.step('Подтверждение заказа'):
+            forms_page.create_order()
+
+        with allure.step('Просмотр статуса заказа'):
+            forms_page.check_status_order()
